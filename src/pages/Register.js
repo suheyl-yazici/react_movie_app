@@ -12,9 +12,10 @@ const Register = () => {
   const navigate= useNavigate();
 
   const handleSubmit = (e) => {
+    const displayName = ` ${firstName} ${lastName}`
     e.preventDefault();
-    createUser(email,password,navigate);
-    navigate("/")
+    createUser(email,password, displayName ,navigate);
+    // navigate("/")
     // console.log(firstName,lastName,email,password);
   }
 
