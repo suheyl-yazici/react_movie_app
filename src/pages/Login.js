@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn, signUpProvider } from "../auth/firebase";
+import { signIn, signUpProvider,forgotPassword } from "../auth/firebase";
 
 
 const Login = () => {
@@ -11,7 +11,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     signIn(email,password,navigate);
-    console.log(email,password);
   }
 
  const handleProviderLogin = () => {
@@ -34,6 +33,9 @@ const Login = () => {
             <label htmlFor="password-name" className="form-label">Password</label>
             <input type="password" className="form-control" id="password-name" placeholder="Enter your password.." onChange={(e) => setPassword(e.target.value)} required/>
         </div>
+        <div className="link" onClick={() => forgotPassword(email)}>
+            Forgot password?
+          </div>
         <input type="submit" className="btn btn-primary form-control" value="Login" />
         </form>
         <button className="btn btn-primary form-control" onClick={handleProviderLogin}>Continue with Google</button>

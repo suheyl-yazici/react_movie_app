@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile , sendPasswordResetEmail,} from "firebase/auth";
+import {
+  toastErrorNotify,
+  toastSuccessNotify,
+  toastWarnNotify,
+} from "../helpers/ToastNotify";
 
 // TODO: Replace the following with your app's Firebase project configuration
 // See: https://firebase.google.com/docs/web/learn-more#config-object
@@ -36,9 +41,10 @@ export const createUser = async(email, password , displayName , navigate) => {
         displayName: displayName,
     });
     navigate("/");
+    toastSuccessNotify("Registered successfully!");
     console.log(userCredential);
     } catch (error) {
-        alert(error.message)
+        toastErrorNotify(error.message);
     }
 };
 
@@ -46,15 +52,16 @@ export const signIn = async(email, password , navigate) => {
     try {
     let userCredential = await signInWithEmailAndPassword(auth, email, password);
     navigate("/")
+    toastSuccessNotify("Logged in successfully!");
     console.log(userCredential);
     } catch (error) {
-        alert(error.message)
+      toastErrorNotify(error.message);  
   }
 };
 
 export const logOut = () => {
     signOut(auth);
-    alert("loged out succesfully")
+    toastSuccessNotify("Logged out successfully!");
 }
 
 export const userObserver = (setCurrentUser) => {
@@ -84,3 +91,13 @@ export const signUpProvider = (navigate) => {
     // ...
   });
 }
+export const forgotPassword = (email) => {
+  sendPasswordResetEmail(auth, email)
+    .then(() => {
+      // Password reset email sent!
+      toastWarnNotify("Please check your mail box!");
+    })
+    .catch((err) => {
+      toastErrorNotify(err.message);
+    });
+};

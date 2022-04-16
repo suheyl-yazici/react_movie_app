@@ -7,10 +7,6 @@ const Navbar = () => {
     const navigate = useNavigate();
     const {currentUser} = useContext(AuthContext);
 
-  // const currentUser = {displayName:"Süheyl Yazıcı"}
-  // const currentUser = false;
-
-
   return (
     <div>
          <nav className="navbar navbar-expand-lg">
